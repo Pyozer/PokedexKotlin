@@ -27,9 +27,9 @@ class PokemonAdapter() : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>(
 
     inner class PokemonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(pokemon: PokemonResults) {
-            val id = pokemon.url.removeSuffix("/").split('/').last()
+            val id = pokemon.id()
             Glide.with(itemView.context)
-                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png")
+                .load(pokemon.getImage())
                 .into(itemView.pokemon_item_photo)
             itemView.pokemon_item_title.text = pokemon.name.capitalize()
             itemView.pokemon_item_id.text = "#$id"

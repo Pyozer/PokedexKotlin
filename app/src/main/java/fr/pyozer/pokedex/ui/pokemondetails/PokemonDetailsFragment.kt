@@ -1,16 +1,21 @@
 package fr.pyozer.pokedex.ui.pokemondetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import fr.pyozer.pokedex.R
 import fr.pyozer.pokedex.model.Pokemon
 import kotlinx.android.synthetic.main.fragment_pokemon_details.*
+import kotlinx.android.synthetic.main.pokemon_item.view.*
 
 class PokemonDetailsFragment : Fragment() {
 
@@ -41,5 +46,16 @@ class PokemonDetailsFragment : Fragment() {
 
     private fun initView(pokemon: Pokemon) {
         pokemon_title.text = pokemon.name.capitalize()
+        pokemon_id.text = "#${pokemon.id}"
+        Glide.with(requireContext())
+            .load(pokemon.getImage())
+            .fitCenter()
+            .into(pokemon_image)
+
+        pokemon_species.text = pokemon.species.name.capitalize()
+        pokemon_height.text = pokemon.height.toString()
+        pokemon_weight.text = pokemon.weight.toString()
+        pokemon_abilities.text =
+            pokemon.abilities.joinToString(", ") { it.ability.name.capitalize() }
     }
 }

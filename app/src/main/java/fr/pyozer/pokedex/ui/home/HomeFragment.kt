@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.pyozer.pokedex.R
-import fr.pyozer.pokedex.model.PokemonResults
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -20,7 +19,6 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
     private val pokemonAdapter = PokemonAdapter()
-    private val gridLayoutManager = GridLayoutManager(context, 2)
     private var currentPage = 0
     private var isLoading = true
 
@@ -38,6 +36,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val gridLayoutManager = GridLayoutManager(context, 2)
         home_list.apply {
             layoutManager = gridLayoutManager
             adapter = pokemonAdapter
@@ -46,7 +46,6 @@ class HomeFragment : Fragment() {
                     if (dy > 0) {
                         if (!isLoading) {
                             if (gridLayoutManager.childCount + gridLayoutManager.findFirstVisibleItemPosition() >= gridLayoutManager.itemCount) {
-                                Log.d("ERROR", "Last Item Wow !")
                                 currentPage++
                                 isLoading = true
                                 viewModel.loadPokemonList(
