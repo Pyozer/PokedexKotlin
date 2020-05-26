@@ -41,7 +41,13 @@ class Pokemon(
     val types: List<Type>,
 
     @Json(name = "abilities")
-    val abilities: List<Ability>
+    val abilities: List<Ability>,
+
+    @Json(name = "stats")
+    val stats: List<Stat>,
+
+    @Json(name = "moves")
+    val moves: List<Move>
 ) {
     fun getImage(): String {
         return "https://pokeres.bastionbot.org/images/pokemon/${id}.png"
@@ -73,6 +79,22 @@ data class Ability(
 
     @Json(name = "slot")
     val slot: Int
+)
+
+data class Stat(
+    @Json(name = "base_stat")
+    val baseStat: Int,
+
+    @Json(name = "effort")
+    val effort: Int,
+
+    @Json(name = "stat")
+    val stat: NameUrl
+)
+
+data class Move(
+    @Json(name = "move")
+    val move: NameUrl
 )
 
 data class NameUrl(
