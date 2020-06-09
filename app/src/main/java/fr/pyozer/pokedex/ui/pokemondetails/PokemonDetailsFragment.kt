@@ -1,5 +1,7 @@
 package fr.pyozer.pokedex.ui.pokemondetails
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -64,6 +66,21 @@ class PokemonDetailsFragment : Fragment() {
 
         pokemonDetailsAdapter?.initData(pokemon)
 
+        val favorites = getFavoritesPrefs()
+
+        updateFavIcon(favorites, pokemon.id)
+
+        pokemon_capture_button.setOnClickListener {
+            if (favorites.contains(pokemon.id)) favorites.remove(pokemon.id)
+            else favorites.add(pokemon.id)
+
+            updateFavIcon(favorites, pokemon.id)
+
+            getPrefs()?.edit()
+                ?.putStringSet("pokemons_captures", favorites.map { it.toString() }.toSet())
+                ?.apply()
+        }
+
         val type = pokemon.types.sortedBy { it.slot }.first()
         when (type.type.name) {
             "water" -> pokemon_view.setBackgroundColor(getColor(R.color.blue))
@@ -75,5 +92,24 @@ class PokemonDetailsFragment : Fragment() {
 
     private fun getColor(color: Int): Int {
         return ContextCompat.getColor(requireContext(), color)
+    }
+
+    private fun updateFavIcon(favorites: MutableSet<Int>, pokemonId: Int): Unit {
+        var drawableId = R.drawable.baseline_favorite_border_24
+        if (favorites.contains(pokemonId)) {
+            drawableId = R.drawable.baseline_favorite_24
+        }
+        pokemon_capture_button.setImageDrawable(resources.getDrawable(drawableId, requireContext().theme))
+    }
+
+    private fun getPrefs(): SharedPreferences? {
+        return activity?.getPreferences(Context.MODE_PRIVATE)
+    }
+
+    private fun getFavoritesPrefs(): MutableSet<Int> {
+        getPrefs()?.let { prefs ->
+            return prefs.getStringSet("pokemons_captures", emptySet())!!.map { it.toInt() }.toMutableSet()
+        }
+        return emptySet<Int>().toMutableSet()
     }
 }
