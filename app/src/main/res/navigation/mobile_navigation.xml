@@ -19,15 +19,15 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="fr.pyozer.pokedex.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="fr.pyozer.pokedex.ui.favorite.FavoriteFragment"
+        android:label="@string/title_favorite"
+        tools:layout="@layout/fragment_favorite" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="fr.pyozer.pokedex.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="fr.pyozer.pokedex.ui.about.AboutFragment"
+        android:label="@string/title_about"
+        tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/pokemonDetailsFragment"
         android:name="fr.pyozer.pokedex.ui.pokemondetails.PokemonDetailsFragment"

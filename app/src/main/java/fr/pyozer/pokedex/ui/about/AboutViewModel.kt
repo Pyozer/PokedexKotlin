@@ -1,13 +1,13 @@
-package fr.pyozer.pokedex.ui.notifications
+package fr.pyozer.pokedex.ui.about
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class AboutViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "About Fragment"
     }
     val text: LiveData<String> = _text
 }
